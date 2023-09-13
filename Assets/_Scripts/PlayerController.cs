@@ -9,9 +9,11 @@ namespace Assets._Scripts
         [SerializeField] private float _speed = 5f;
 
         private PhotonView _photonView;
+        private Health _health;
 
         private void Start()
         {
+            _health = FindObjectOfType<Health>();
             _photonView = GetComponent<PhotonView>();
         }
 
@@ -22,6 +24,13 @@ namespace Assets._Scripts
             var vertical = Input.GetAxis("Vertical");
             var direction = new Vector3(horizontal, 0, vertical).normalized;
             _controller.Move((_speed * Time.deltaTime) * direction);
+        }
+
+        public void TakeDamage()
+        {
+            if (!_photonView.IsMine) return;
+
+            _health.TakeDamage();
         }
     }
 }

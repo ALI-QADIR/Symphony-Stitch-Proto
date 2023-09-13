@@ -12,7 +12,7 @@ namespace Assets._Scripts
         {
             var randomX = Random.Range(_minX, _maxX);
             var randomZ = Random.Range(_minZ, _maxY);
-            PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(randomX, 0.7f, randomZ), Quaternion.identity);
+            PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(randomX, 0.5f, randomZ), Quaternion.identity);
         }
     }
 }

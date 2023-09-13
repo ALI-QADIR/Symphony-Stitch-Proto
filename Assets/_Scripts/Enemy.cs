@@ -1,4 +1,5 @@
 using UnityEngine;
+using Photon.Pun;
 
 namespace Assets._Scripts
 {
@@ -19,6 +20,13 @@ namespace Assets._Scripts
 
         private void Update()
         {
+            // if there are less than 2 players in the room, return
+            if (PhotonNetwork.CurrentRoom.PlayerCount < 2) return;
+            Move();
+        }
+
+        private void Move()
+        {
             // find nearest player of the 2 players
             var distancePlayer1 = Vector3.Distance(transform.position, _players[0].transform.position);
             var distancePlayer2 = Vector3.Distance(transform.position, _players[1].transform.position);
@@ -30,6 +38,14 @@ namespace Assets._Scripts
             transform.LookAt(_target.transform);
             // move towards the target
             _controller.Move((_speed * Time.deltaTime) * transform.forward);
+        }
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if (!hit.gameObject.CompareTag("Player")) return;
+
+            _target.TakeDamage();
+            Destroy(gameObject);
         }
     }
 }
