@@ -39,13 +39,5 @@ namespace Assets._Scripts
             // move towards the target
             _controller.Move((_speed * Time.deltaTime) * transform.forward);
         }
-
-        private void OnControllerColliderHit(ControllerColliderHit hit)
-        {
-            if (!hit.gameObject.CompareTag("Player")) return;
-
-            _target.TakeDamage();
-            Destroy(gameObject);
-        }
     }
 }

@@ -21,11 +21,11 @@ namespace Assets._Scripts
 
         public void TakeDamage()
         {
-            _photonView.RPC("TakeDamageRPC", RpcTarget.All);
+            _photonView.RPC("TakeDamageRpc", RpcTarget.All);
         }
 
         [PunRPC]
-        private void TakeDamageRPC()
+        private void TakeDamageRpc()
         {
             _currentHealth--;
             _healthText.text = _currentHealth.ToString();

@@ -12,10 +12,6 @@ namespace Assets._Scripts
         private float _elapsedTime = 0f;
         
 
-        private void Start()
-        {
-        }
-
         private void SpawnEnemy()
         {
             var spawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
