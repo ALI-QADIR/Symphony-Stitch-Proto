@@ -25,7 +25,7 @@ namespace Assets._Scripts
         private void Update()
         {
             // if there are less than 2 players in the room, return
-            if (PhotonNetwork.CurrentRoom.PlayerCount < 2) return;
+            if (!Health.isGameActive) return;
             Move();
             CheckHit();
         }

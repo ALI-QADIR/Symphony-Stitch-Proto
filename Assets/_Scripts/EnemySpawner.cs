@@ -20,7 +20,7 @@ namespace Assets._Scripts
         // Update is called once per frame
         private void Update()
         {
-            if (!PhotonNetwork.IsMasterClient || PhotonNetwork.CurrentRoom.PlayerCount < 2) return;
+            if (!PhotonNetwork.IsMasterClient || !Health.isGameActive) return;
 
             _elapsedTime += Time.deltaTime;
             if (!(_elapsedTime >= _timeBetweenSpawns)) return;
