@@ -10,7 +10,6 @@ namespace Assets._Scripts
 
         [SerializeField] private float _timeBetweenSpawns = 5f;
         private float _elapsedTime = 0f;
-        
 
         private void SpawnEnemy()
         {
@@ -27,6 +26,12 @@ namespace Assets._Scripts
             if (!(_elapsedTime >= _timeBetweenSpawns)) return;
             _elapsedTime = 0f;
             SpawnEnemy();
+        }
+
+        public void DestroyEnemy(Enemy obj)
+        {
+            if (!PhotonNetwork.IsMasterClient) return;
+            PhotonNetwork.Destroy(obj.gameObject);
         }
     }
 }

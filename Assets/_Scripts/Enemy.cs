@@ -9,13 +9,17 @@ namespace Assets._Scripts
         private PlayerController[] _players;
         private PlayerController _target;
         private CharacterController _controller;
+        private bool _hasDeductedHealth;
+        private EnemySpawner _enemySpawner;
 
         [SerializeField] private float _speed = 5f;
 
         private void Start()
         {
+            _hasDeductedHealth = false;
             _controller = GetComponent<CharacterController>();
             _players = FindObjectsOfType<PlayerController>();
+            _enemySpawner = GameObject.FindGameObjectWithTag("EnemySpawner").GetComponent<EnemySpawner>();
         }
 
         private void Update()
@@ -23,6 +27,26 @@ namespace Assets._Scripts
             // if there are less than 2 players in the room, return
             if (PhotonNetwork.CurrentRoom.PlayerCount < 2) return;
             Move();
+            CheckHit();
+        }
+
+        private void CheckHit()
+        {
+            var hits = Physics.OverlapSphere(transform.position, 0.55f);
+            foreach (var hit in hits)
+            {
+                if (hit.CompareTag("Ray"))
+                {
+                    _enemySpawner.DestroyEnemy(this);
+                }
+                else if (hit.CompareTag("Player") && !_hasDeductedHealth)
+                {
+                    var player = hit.GetComponent<PlayerController>();
+                    player.TakeDamage();
+                    _enemySpawner.DestroyEnemy(this);
+                    _hasDeductedHealth = true;
+                }
+            }
         }
 
         private void Move()

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ray
   - Enemy
+  - EnemySpawner
   layers:
   - Default
   - TransparentFX
