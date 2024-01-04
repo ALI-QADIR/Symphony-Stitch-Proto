@@ -13,6 +13,7 @@ namespace Assets._Scripts
         [SerializeField] private TMP_Text _timeText;
         [SerializeField] private TMP_Text _countdownText;
         [SerializeField] private TMP_Text _waitingText;
+        [SerializeField] private TMP_Text _gameOverText;
         [SerializeField] private int _maxHealth = 10;
         private int _currentHealth;
         private int _serverCountdown = 3;
@@ -43,14 +44,14 @@ namespace Assets._Scripts
             if (_currentHealth <= 0 && isGameActive)
             {
                 isGameActive = false;
-                // TODO: display game over panel
+                GameOver("You Died.", _localTime);
                 StopCoroutine(_timerCoroutine);
             }
 
             if (PhotonNetwork.CurrentRoom.PlayerCount < 2 && _countdownBegun && isGameActive)
             {
                 isGameActive = false;
-                // TODO: display Game Over panel
+                GameOver("Player 2 Left.", _localTime);
                 StopCoroutine(_timerCoroutine);
             }
             else if (PhotonNetwork.CurrentRoom.PlayerCount == 2 && !_countdownBegun)
@@ -86,6 +87,12 @@ namespace Assets._Scripts
         private void UpdateTimeRpc()
         {
             _serverTime = _localTime;
+        }
+
+        private void GameOver(string text, int score)
+        {
+            _gameOverText.text = text + " Your Score: " + score.ToString();
+            _gameOverText.gameObject.SetActive(true);
         }
 
         private IEnumerator Countdown()
